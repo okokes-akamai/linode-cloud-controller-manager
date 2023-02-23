@@ -450,9 +450,9 @@ func (l *loadbalancers) getNodeBalancerByHostname(ctx context.Context, service *
 }
 
 func (l *loadbalancers) getNodeBalancerByIPv4(ctx context.Context, service *v1.Service, ipv4 string) (*linodego.NodeBalancer, error) {
-	f := linodego.Filter{}
+	f := &linodego.Filter{}
 	f.AddField(linodego.Eq, "ipv4", ipv4)
-	filter, err := json.Marshal(f)
+	filter, err := f.MarshalJSON()
 	if err != nil {
 		return nil, err
 	}
