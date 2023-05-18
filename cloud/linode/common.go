@@ -3,6 +3,7 @@ package linode
 import (
 	"context"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 
@@ -38,6 +39,7 @@ func linodeFilterListOptions(targetLabel string) *linodego.ListOptions {
 }
 
 func linodeByName(ctx context.Context, client Client, nodeName types.NodeName) (*linodego.Instance, error) {
+	log.Printf("PERF: linodeByName: %v", nodeName)
 	linodes, err := client.ListInstances(ctx, linodeFilterListOptions(string(nodeName)))
 	if err != nil {
 		return nil, err
@@ -53,6 +55,7 @@ func linodeByName(ctx context.Context, client Client, nodeName types.NodeName) (
 }
 
 func linodeByID(ctx context.Context, client Client, id int) (*linodego.Instance, error) {
+	log.Printf("PERF: linodeByID: %v", id)
 	instance, err := client.GetInstance(ctx, id)
 	if err != nil {
 		return nil, err
